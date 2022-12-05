@@ -1,0 +1,148 @@
+package GameLevel;
+
+public class MainPlayTest {
+
+	public static void main(String[] args) {
+		
+		Player player = new Player();
+		player.play(1);
+		
+		AdvancedLevel aLevel = new AdvancedLevel();
+		player.upgradeLevel(aLevel);
+		player.play(2);
+		
+		SuperLevel sLevel = new SuperLevel();
+		player.upgradeLevel(sLevel);
+		player.play(3);
+		
+		
+	}
+
+}
+
+package GameLevel;
+
+public class Player{
+	
+	protected PlayerLevel level;
+	
+	public Player() {
+		level = new BeginnerLevel();
+		level.showLevelMessage();
+	}
+	
+	public PlayerLevel getLevel(){
+		return level;
+	}
+	
+	public void upgradeLevel(PlayerLevel level) {
+		this.level = level;
+		level.showLevelMessage();
+	}
+	
+	public void play(int count) {
+		level.go(count);
+		
+	}
+
+}
+
+package GameLevel;
+
+public abstract class PlayerLevel{
+
+		public abstract void run();
+		public abstract void jump();
+		public abstract void turn();
+		public abstract void showLevelMessage();
+		
+		final void go(int count) {	
+			
+			run();
+			for(int i = 0; i < count; i++) {
+				jump();
+			}
+			turn();
+			
+		}
+		
+}
+
+package GameLevel;
+
+public class SuperLevel extends PlayerLevel{
+
+	@Override
+	public void run() {
+		System.out.println("엄청 빠르게 달립니다.");
+	}
+
+	@Override
+	public void jump() {
+		System.out.println("높게 점프합니다.");
+	}
+
+	@Override
+	public void turn() {
+		System.out.println("turn 합니다.");
+	}
+
+	@Override
+	public void showLevelMessage() {
+		System.out.println("------- 고급자 레벨입니다. --------");
+	}	
+
+}
+
+package GameLevel;
+
+public class AdvancedLevel extends PlayerLevel{
+
+	@Override
+	public void run() {
+		System.out.println("빠르게 달립니다.");
+	}
+
+	@Override
+	public void jump() {
+		System.out.println("jump 합니다.");
+	}
+
+	@Override
+	public void turn() {
+		System.out.println("turn은 레벨이 부족합니다.");
+	}
+
+	@Override
+	public void showLevelMessage() {
+		System.out.println("------- 중급자 레벨입니다. ------");
+	}
+	
+
+}
+
+package GameLevel;
+
+public class BeginnerLevel extends PlayerLevel{
+
+	@Override
+	public void run() {
+		System.out.println("천천히 달립니다.");
+	}
+
+	@Override
+	public void jump() {
+		System.out.println("jump는 레벨이 부족합니다.");
+	}
+
+	@Override
+	public void turn() {
+		System.out.println("turn은 레벨이 부족합니다.");
+	}
+
+	@Override
+	public void showLevelMessage() {
+		System.out.println("------- 초급자 레벨입니다. --------");
+	}
+	
+}
